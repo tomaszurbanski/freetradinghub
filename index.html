@@ -1,56 +1,181 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradingView - Wskaźniki</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreeTradingHub</title>
+
     <style>
-        html, body {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
         }
 
-        h1 {
-            margin-top: 10px;
-            color: #333;
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: #e5e7eb;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(59,130,246,0.15), transparent 35%),
+                radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 30%),
+                linear-gradient(180deg, #0b1020 0%, #111827 100%);
+        }
+
+        .container {
+            width: min(1400px, 92%);
+            margin: 0 auto;
+            padding: 30px 0 60px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px 30px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .hero p {
+            margin: 16px auto 0;
+            max-width: 760px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #9ca3af;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            margin-bottom: 18px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.05);
+            color: #cbd5e1;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .widgets-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .widget-card {
+            background: rgba(17, 24, 39, 0.82);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+            backdrop-filter: blur(8px);
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
         }
 
         .widget-title {
-            width: 90vw;
-            margin: 20px 0 8px 0;
-            color: #222;
-            font-size: 26px;
-            font-weight: bold;
-            text-align: left;
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: #f9fafb;
+        }
+
+        .widget-subtitle {
+            font-size: 13px;
+            color: #9ca3af;
+            background: rgba(59,130,246,0.12);
+            border: 1px solid rgba(59,130,246,0.25);
+            padding: 6px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
         }
 
         .tradingview_container {
-            width: 90vw;
-            height: 800px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            background-color: #fff;
+            width: 100%;
+            height: 760px;
+            background: #0f172a;
+        }
+
+        .footer {
+            margin-top: 36px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding-top: 20px;
+            }
+
+            .hero {
+                padding: 20px 10px 20px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .widget-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .widget-title {
+                font-size: 20px;
+            }
+
+            .tradingview_container {
+                height: 620px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>TradingView - Wskaźniki</h1>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-badge">FreeTradingHub • Premium Indicators</div>
+            <h1>TradingView Indicators Hub</h1>
+            <p>
+                Zbiór wskaźników i narzędzi do analizy rynku.
+            </p>
+        </section>
+
+        <section class="widgets-grid" id="widgets-grid"></section>
+
+        <div class="footer">
+            © FreeTradingHub
+        </div>
+    </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
-    <script type="text/javascript">
-        const widgets = [            
+    <script>
+        const widgets = [
             { name: "Algo TEM", studies: ["PUB;ff5b3733e74c441bb464b361c4665386"] },
             { name: "Sniper Pro", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
             { name: "Nexus", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
             { name: "Golden Era New", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
-            { name: "Golden Era", studies: ["PUB;0b373fb0e6634a73bc8b838cf0690725"] },
+            /*{ name: "Golden Era", studies: ["PUB;0b373fb0e6634a73bc8b838cf0690725"] },*/
             { name: "Quantum", studies: ["PUB;3b86bd1192124fd98583490bb7508041"] },
             { name: "Wolf X", studies: ["PUB;862506c546514212b9728a634dbc7152"] },
             { name: "Trend Wave", studies: [
@@ -58,8 +183,8 @@
                 "PUB;6ac2587549144bc9a8cd6ae15730895b",
                 "PUB;af2dc588b5f34409a046f96b625c9b6b",
                 "PUB;06fc6d6e9252415c9afdac437e0764dc"
-            ] },
-            { name: "Trend Wave", studies: ["PUB;00ec48baf0ee43f0a43e1658bb54cdab", "PUB;38080827cf244587b5e7dbb9f272db0a"] },
+            ]},
+            { name: "Trend Wave Pro", studies: ["PUB;00ec48baf0ee43f0a43e1658bb54cdab", "PUB;38080827cf244587b5e7dbb9f272db0a"] },
             { name: "Smartmonics", studies: ["PUB;ec7a7c1c91c645519b35b9505b4169a9", "PUB;5bdd7bb857ba48d68bf573c3fe0a08c3"] },
             { name: "Liquidity Flow", studies: ["PUB;cfb67dca49e94b5ca341ab4c1bcf4d37", "PUB;b7b3fe63710742cb9f7db5bfa9695e5a"] },
             { name: "Sniper", studies: ["PUB;717dd00ad9c1445b84b39adfb5ed5f3d", "PUB;903a688ad7a34daf86cdd8c287df09cc"] },
@@ -71,40 +196,54 @@
             { name: "Vumacha", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
         ];
 
+        const grid = document.getElementById("widgets-grid");
+
         widgets.forEach((widget, index) => {
-            const title = document.createElement("div");
+            const card = document.createElement("div");
+            card.className = "widget-card";
+
+            const header = document.createElement("div");
+            header.className = "widget-header";
+
+            const title = document.createElement("h2");
             title.className = "widget-title";
             title.textContent = widget.name;
-            document.body.appendChild(title);
+
+            const badge = document.createElement("div");
+            badge.className = "widget-subtitle";
+            badge.textContent = "XAUUSD • 5m";
+
+            header.appendChild(title);
+            header.appendChild(badge);
 
             const container = document.createElement("div");
             container.className = "tradingview_container";
             container.id = "tradingview_chart_" + index;
-            document.body.appendChild(container);
+
+            card.appendChild(header);
+            card.appendChild(container);
+            grid.appendChild(card);
 
             new TradingView.widget({
                 container_id: container.id,
-                width: "90vw",
-                height: "800",
+                width: "100%",
+                height: "760",
                 symbol: "OANDA:XAUUSD",
                 interval: "5",
-                timezone: "Etc/UTC",
-                theme: "light",
+                timezone: "Europe/Berlin",
+                theme: "dark",
                 style: "1",
                 locale: "pl",
-                toolbar_bg: "#f1f3f6",
+                toolbar_bg: "#111827",
                 hide_legend: false,
                 hide_side_toolbar: false,
                 hide_top_toolbar: false,
-                enable_publishing: true,
+                enable_publishing: false,
                 allow_symbol_change: true,
-                hide_volume: false,
+                hide_volume: true,
                 studies: widget.studies
             });
         });
     </script>
 </body>
 </html>
-
-
-
