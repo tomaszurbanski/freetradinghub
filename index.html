@@ -34,7 +34,7 @@
 
         .hero {
             text-align: center;
-            padding: 40px 20px 30px;
+            padding: 40px 20px 24px;
         }
 
         .hero h1 {
@@ -65,11 +65,49 @@
             letter-spacing: 0.3px;
         }
 
-        .widgets-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            margin-top: 20px;
+        .tabs-wrapper {
+            margin-top: 24px;
+            margin-bottom: 22px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            background: rgba(17, 24, 39, 0.72);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+            backdrop-filter: blur(8px);
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: #cbd5e1;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: rgba(59,130,246,0.14);
+            border-color: rgba(59,130,246,0.30);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
+            border-color: rgba(96,165,250,0.5);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(37,99,235,0.28);
         }
 
         .widget-card {
@@ -147,6 +185,15 @@
             .tradingview_container {
                 height: 620px;
             }
+
+            .tab-btn {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .tabs {
+                justify-content: flex-start;
+            }
         }
     </style>
 </head>
@@ -160,7 +207,17 @@
             </p>
         </section>
 
-        <section class="widgets-grid" id="widgets-grid"></section>
+        <section class="tabs-wrapper">
+            <div class="tabs" id="tabs"></div>
+        </section>
+
+        <section class="widget-card">
+            <div class="widget-header">
+                <h2 class="widget-title" id="active-widget-title">Algo TEM</h2>
+                <div class="widget-subtitle" id="active-widget-badge">XAUUSD • 5m</div>
+            </div>
+            <div class="tradingview_container" id="tradingview_chart"></div>
+        </section>
 
         <div class="footer">
             © FreeTradingHub
@@ -175,7 +232,6 @@
             { name: "Sniper Pro", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
             { name: "Nexus", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
             { name: "Golden Era New", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
-            /*{ name: "Golden Era", studies: ["PUB;0b373fb0e6634a73bc8b838cf0690725"] },*/
             { name: "Quantum", studies: ["PUB;3b86bd1192124fd98583490bb7508041"] },
             { name: "Wolf X", studies: ["PUB;862506c546514212b9728a634dbc7152"] },
             { name: "Trend Wave", studies: [
@@ -196,36 +252,29 @@
             { name: "Vumacha", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
         ];
 
-        const grid = document.getElementById("widgets-grid");
+        const tabsContainer = document.getElementById("tabs");
+        const activeWidgetTitle = document.getElementById("active-widget-title");
+        const activeWidgetBadge = document.getElementById("active-widget-badge");
+        const chartContainerId = "tradingview_chart";
 
-        widgets.forEach((widget, index) => {
-            const card = document.createElement("div");
-            card.className = "widget-card";
+        function renderTabs(activeIndex) {
+            tabsContainer.innerHTML = "";
 
-            const header = document.createElement("div");
-            header.className = "widget-header";
+            widgets.forEach((widget, index) => {
+                const btn = document.createElement("button");
+                btn.className = "tab-btn" + (index === activeIndex ? " active" : "");
+                btn.textContent = widget.name;
+                btn.addEventListener("click", () => loadWidget(index));
+                tabsContainer.appendChild(btn);
+            });
+        }
 
-            const title = document.createElement("h2");
-            title.className = "widget-title";
-            title.textContent = widget.name;
-
-            const badge = document.createElement("div");
-            badge.className = "widget-subtitle";
-            badge.textContent = "XAUUSD • 5m";
-
-            header.appendChild(title);
-            header.appendChild(badge);
-
-            const container = document.createElement("div");
-            container.className = "tradingview_container";
-            container.id = "tradingview_chart_" + index;
-
-            card.appendChild(header);
-            card.appendChild(container);
-            grid.appendChild(card);
+        function renderTradingView(widget) {
+            const container = document.getElementById(chartContainerId);
+            container.innerHTML = "";
 
             new TradingView.widget({
-                container_id: container.id,
+                container_id: chartContainerId,
                 width: "100%",
                 height: "760",
                 symbol: "OANDA:XAUUSD",
@@ -243,7 +292,17 @@
                 hide_volume: true,
                 studies: widget.studies
             });
-        });
+        }
+
+        function loadWidget(index) {
+            const widget = widgets[index];
+            activeWidgetTitle.textContent = widget.name;
+            activeWidgetBadge.textContent = "XAUUSD • 5m";
+            renderTabs(index);
+            renderTradingView(widget);
+        }
+
+        loadWidget(0);
     </script>
 </body>
 </html>
