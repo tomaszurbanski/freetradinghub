@@ -11,14 +11,22 @@
         }
 
         :root {
-            --bg-1: #0b1020;
+            --bg-1: #0a0f1f;
             --bg-2: #111827;
-            --card: rgba(17, 24, 39, 0.82);
+            --bg-3: #0b1224;
+            --card: rgba(17, 24, 39, 0.72);
+            --card-2: rgba(15, 23, 42, 0.72);
             --border: rgba(255,255,255,0.08);
             --text: #e5e7eb;
-            --muted: #9ca3af;
+            --muted: #94a3b8;
             --white: #ffffff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.28);
+            --primary: #4f46e5;
+            --primary-2: #4338ca;
+            --accent: #06b6d4;
+            --accent-2: #0891b2;
+            --success: #22c55e;
+            --danger: #64748b;
+            --shadow: 0 12px 34px rgba(2,6,23,0.38);
             --radius: 20px;
         }
 
@@ -33,24 +41,33 @@
         body {
             min-height: 100vh;
             background:
-                radial-gradient(circle at top left, rgba(59,130,246,0.15), transparent 35%),
-                radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 30%),
-                linear-gradient(180deg, #0b1020 0%, #111827 100%);
+                radial-gradient(circle at top left, rgba(79,70,229,0.24), transparent 34%),
+                radial-gradient(circle at top right, rgba(6,182,212,0.18), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(59,130,246,0.10), transparent 24%),
+                linear-gradient(180deg, #0a0f1f 0%, #0f172a 50%, #111827 100%);
         }
 
         body.light-mode {
-            --bg-1: #eef2ff;
-            --bg-2: #f8fafc;
-            --card: rgba(255, 255, 255, 0.92);
+            --bg-1: #eef4ff;
+            --bg-2: #f8fbff;
+            --bg-3: #e8f1ff;
+            --card: rgba(255,255,255,0.90);
+            --card-2: rgba(248,250,252,0.94);
             --border: rgba(15,23,42,0.10);
             --text: #0f172a;
             --muted: #475569;
             --white: #0f172a;
-            --shadow: 0 10px 30px rgba(15,23,42,0.10);
+            --primary: #4f46e5;
+            --primary-2: #4338ca;
+            --accent: #0891b2;
+            --accent-2: #0e7490;
+            --success: #16a34a;
+            --danger: #64748b;
+            --shadow: 0 12px 32px rgba(15,23,42,0.10);
             background:
-                radial-gradient(circle at top left, rgba(59,130,246,0.10), transparent 35%),
-                radial-gradient(circle at top right, rgba(16,185,129,0.08), transparent 30%),
-                linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+                radial-gradient(circle at top left, rgba(79,70,229,0.12), transparent 34%),
+                radial-gradient(circle at top right, rgba(6,182,212,0.10), transparent 28%),
+                linear-gradient(180deg, #f8fbff 0%, #eef4ff 55%, #e6eefc 100%);
         }
 
         .container {
@@ -61,7 +78,7 @@
 
         .hero {
             text-align: center;
-            padding: 32px 20px 20px;
+            padding: 32px 20px 18px;
             position: relative;
         }
 
@@ -79,12 +96,14 @@
             border-radius: 16px;
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 24px rgba(2,6,23,0.22);
         }
 
         body.light-mode .theme-toggle-box {
-            background: rgba(255,255,255,0.72);
+            background: rgba(255,255,255,0.78);
             border: 1px solid rgba(15,23,42,0.10);
+            box-shadow: 0 10px 22px rgba(15,23,42,0.08);
         }
 
         .theme-label {
@@ -132,8 +151,8 @@
         }
 
         .theme-switch input:checked + .theme-slider {
-            background: linear-gradient(135deg, #bfdbfe, #60a5fa);
-            border-color: rgba(59,130,246,0.35);
+            background: linear-gradient(135deg, #bfdbfe, #67e8f9);
+            border-color: rgba(79,70,229,0.24);
         }
 
         .theme-switch input:checked + .theme-slider:before {
@@ -154,34 +173,158 @@
             display: inline-block;
             margin-bottom: 18px;
             padding: 8px 14px;
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(79,70,229,0.22);
             border-radius: 999px;
-            background: rgba(255,255,255,0.05);
-            color: #cbd5e1;
+            background: rgba(79,70,229,0.10);
+            color: #c7d2fe;
             font-size: 14px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
         }
 
         body.light-mode .hero-badge {
-            border: 1px solid rgba(15,23,42,0.10);
-            background: rgba(255,255,255,0.8);
-            color: #334155;
+            border: 1px solid rgba(79,70,229,0.16);
+            background: rgba(79,70,229,0.08);
+            color: #3730a3;
         }
 
         .hero h1 {
-            margin: 0;
+            margin: 0 0 16px;
             font-size: clamp(34px, 5vw, 58px);
             font-weight: 800;
             color: var(--white);
+            letter-spacing: 0.2px;
         }
 
         .top-panel,
+        .sessions-panel,
         .widget-card,
         .insights-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+        }
+
+        .sessions-panel {
+            max-width: 980px;
+            margin: 0 auto 18px;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .sessions-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sessions-title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .sessions-subtitle {
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .overlap-badge {
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.05);
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .overlap-badge.active {
+            background: linear-gradient(135deg, rgba(79,70,229,0.16), rgba(6,182,212,0.16));
+            color: #e0f2fe;
+            border-color: rgba(103,232,249,0.20);
+        }
+
+        body.light-mode .overlap-badge.active {
+            color: #155e75;
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .session-card {
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 10px 11px;
+            min-width: 0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        .session-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .session-name {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .session-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--danger);
+            box-shadow: 0 0 0 3px rgba(100,116,139,0.12);
+        }
+
+        .status-dot.open {
+            background: var(--success);
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.14);
+        }
+
+        .session-time {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            color: var(--white);
+            margin-bottom: 3px;
+            line-height: 1.1;
+        }
+
+        .session-meta {
+            font-size: 10px;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+
+        .session-hours {
+            font-size: 9px;
+            color: var(--muted);
+            opacity: 0.95;
         }
 
         .top-panel {
@@ -191,7 +334,7 @@
 
         .controls-grid {
             display: grid;
-            grid-template-columns: 180px 130px minmax(220px, 320px) auto auto;
+            grid-template-columns: 180px 130px minmax(220px, 320px) auto auto auto;
             gap: 12px;
             align-items: end;
             justify-content: start;
@@ -232,8 +375,8 @@
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
             transition: all 0.2s ease;
             background-image:
-                linear-gradient(45deg, transparent 50%, #cbd5e1 50%),
-                linear-gradient(135deg, #cbd5e1 50%, transparent 50%);
+                linear-gradient(45deg, transparent 50%, #67e8f9 50%),
+                linear-gradient(135deg, #67e8f9 50%, transparent 50%);
             background-position:
                 calc(100% - 18px) calc(50% - 3px),
                 calc(100% - 12px) calc(50% - 3px);
@@ -247,12 +390,12 @@
             border: 1px solid rgba(15,23,42,0.12);
             box-shadow: inset 0 1px 0 rgba(15,23,42,0.03);
             background-image:
-                linear-gradient(45deg, transparent 50%, #475569 50%),
-                linear-gradient(135deg, #475569 50%, transparent 50%);
+                linear-gradient(45deg, transparent 50%, #0891b2 50%),
+                linear-gradient(135deg, #0891b2 50%, transparent 50%);
         }
 
         .control-select:hover {
-            border-color: rgba(59,130,246,0.35);
+            border-color: rgba(6,182,212,0.38);
             background-color: #111827;
         }
 
@@ -261,8 +404,8 @@
         }
 
         .control-select:focus {
-            border-color: rgba(59,130,246,0.55);
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.16);
+            border-color: rgba(79,70,229,0.55);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.16);
         }
 
         .control-select option {
@@ -287,15 +430,21 @@
 
         .control-btn:hover {
             transform: translateY(-1px);
-            background: rgba(59,130,246,0.14);
-            border-color: rgba(59,130,246,0.30);
+            background: rgba(79,70,229,0.14);
+            border-color: rgba(79,70,229,0.30);
             color: #ffffff;
         }
 
         .control-btn.primary {
-            background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: #ffffff;
-            border-color: rgba(96,165,250,0.4);
+            border-color: rgba(103,232,249,0.20);
+            box-shadow: 0 10px 24px rgba(79,70,229,0.24);
+        }
+
+        .control-btn.primary:hover {
+            background: linear-gradient(135deg, var(--primary-2), var(--accent-2));
+            color: #ffffff;
         }
 
         body.light-mode .control-btn {
@@ -305,9 +454,9 @@
         }
 
         body.light-mode .control-btn:hover {
-            background: rgba(59,130,246,0.10);
+            background: rgba(79,70,229,0.08);
             color: #0f172a;
-            border-color: rgba(59,130,246,0.30);
+            border-color: rgba(79,70,229,0.22);
         }
 
         body.light-mode .control-btn.primary {
@@ -321,10 +470,18 @@
             align-items: start;
         }
 
+        .content-grid.insights-hidden {
+            grid-template-columns: 1fr;
+        }
+
         .widget-card,
         .insights-card {
             overflow: hidden;
             min-width: 0;
+        }
+
+        .insights-card.hidden {
+            display: none;
         }
 
         .widget-header,
@@ -335,13 +492,13 @@
             gap: 14px;
             padding: 18px 22px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.02);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
         }
 
         body.light-mode .widget-header,
         body.light-mode .insights-header {
             border-bottom: 1px solid rgba(15,23,42,0.08);
-            background: rgba(255,255,255,0.55);
+            background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
         }
 
         .widget-header-left {
@@ -389,13 +546,15 @@
         }
 
         .widget-chip.primary {
-            background: rgba(59,130,246,0.12);
-            border-color: rgba(59,130,246,0.25);
-            color: #dbeafe;
+            background: linear-gradient(135deg, rgba(79,70,229,0.16), rgba(6,182,212,0.14));
+            border-color: rgba(103,232,249,0.18);
+            color: #e0e7ff;
         }
 
         body.light-mode .widget-chip.primary {
-            color: #1d4ed8;
+            color: #3730a3;
+            border-color: rgba(79,70,229,0.18);
+            background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(6,182,212,0.08));
         }
 
         .widget-actions {
@@ -424,8 +583,8 @@
         }
 
         .mini-btn:hover {
-            background: rgba(59,130,246,0.14);
-            border-color: rgba(59,130,246,0.30);
+            background: rgba(79,70,229,0.12);
+            border-color: rgba(79,70,229,0.26);
         }
 
         .chart-wrap,
@@ -469,14 +628,15 @@
         }
 
         .insights-tab-btn:hover {
-            background: rgba(59,130,246,0.14);
-            border-color: rgba(59,130,246,0.30);
+            background: rgba(79,70,229,0.12);
+            border-color: rgba(79,70,229,0.24);
         }
 
         .insights-tab-btn.active {
-            background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: #ffffff;
-            border-color: rgba(96,165,250,0.4);
+            border-color: rgba(103,232,249,0.18);
+            box-shadow: 0 10px 22px rgba(79,70,229,0.20);
         }
 
         body.light-mode .insights-tab-btn {
@@ -536,7 +696,8 @@
         }
 
         @media (max-width: 1280px) {
-            .content-grid {
+            .content-grid,
+            .content-grid.insights-hidden {
                 grid-template-columns: 1fr;
             }
 
@@ -550,8 +711,16 @@
                 grid-template-columns: 1fr 1fr;
             }
 
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+
             .hero-topbar {
                 justify-content: center;
+            }
+
+            .sessions-panel {
+                max-width: 100%;
             }
         }
 
@@ -562,11 +731,16 @@
             }
 
             .hero {
-                padding: 20px 10px 20px;
+                padding: 20px 10px 16px;
             }
 
             .controls-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .sessions-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             .widget-header {
@@ -612,6 +786,57 @@
 
             <div class="hero-badge">FreeTradingHub • Premium Indicators</div>
             <h1>TradingView Indicators Hub</h1>
+
+            <section class="sessions-panel">
+                <div class="sessions-header">
+                    <div>
+                        <h3 class="sessions-title">Market Sessions</h3>
+                        <div class="sessions-subtitle">Live clocks and session status</div>
+                    </div>
+                    <div class="overlap-badge" id="overlapBadge">No major overlap</div>
+                </div>
+
+                <div class="sessions-grid">
+                    <div class="session-card">
+                        <div class="session-top">
+                            <div class="session-name">London</div>
+                            <div class="session-status">
+                                <span class="status-dot" id="londonDot"></span>
+                                <span id="londonStatus">Closed</span>
+                            </div>
+                        </div>
+                        <div class="session-time" id="londonTime">--:--</div>
+                        <div class="session-meta">Europe/London</div>
+                        <div class="session-hours">08:00–17:00 local</div>
+                    </div>
+
+                    <div class="session-card">
+                        <div class="session-top">
+                            <div class="session-name">New York</div>
+                            <div class="session-status">
+                                <span class="status-dot" id="newyorkDot"></span>
+                                <span id="newyorkStatus">Closed</span>
+                            </div>
+                        </div>
+                        <div class="session-time" id="newyorkTime">--:--</div>
+                        <div class="session-meta">America/New_York</div>
+                        <div class="session-hours">08:00–17:00 local</div>
+                    </div>
+
+                    <div class="session-card">
+                        <div class="session-top">
+                            <div class="session-name">Asia</div>
+                            <div class="session-status">
+                                <span class="status-dot" id="asiaDot"></span>
+                                <span id="asiaStatus">Closed</span>
+                            </div>
+                        </div>
+                        <div class="session-time" id="asiaTime">--:--</div>
+                        <div class="session-meta">Asia/Tokyo</div>
+                        <div class="session-hours">09:00–18:00 local</div>
+                    </div>
+                </div>
+            </section>
         </section>
 
         <section class="top-panel">
@@ -651,10 +876,11 @@
 
                 <button class="control-btn primary" id="applyBtn">Apply</button>
                 <button class="control-btn" id="resetBtn">Reset</button>
+                <button class="control-btn" id="toggleInsightsBtn">Hide Insights</button>
             </div>
         </section>
 
-        <section class="content-grid">
+        <section class="content-grid" id="contentGrid">
             <section class="widget-card" id="widgetCard">
                 <div class="widget-header">
                     <div class="widget-header-left">
@@ -678,7 +904,7 @@
                 </div>
             </section>
 
-            <aside class="insights-card">
+            <aside class="insights-card" id="insightsCard">
                 <div class="insights-header">
                     <div>
                         <h3 class="insights-title">Insights</h3>
@@ -737,7 +963,8 @@
             symbol: "OANDA:XAUUSD",
             interval: "5",
             theme: "dark",
-            insightsMode: "technical"
+            insightsMode: "technical",
+            insightsVisible: true
         };
 
         let currentWidgetIndex = defaultState.widgetIndex;
@@ -745,6 +972,7 @@
         let currentInterval = defaultState.interval;
         let currentTheme = defaultState.theme;
         let currentInsightsMode = defaultState.insightsMode;
+        let insightsVisible = defaultState.insightsVisible;
 
         const activeWidgetTitle = document.getElementById("active-widget-title");
         const activeWidgetBadge = document.getElementById("active-widget-badge");
@@ -763,6 +991,9 @@
         const refreshBtn = document.getElementById("refreshBtn");
         const fullscreenBtn = document.getElementById("fullscreenBtn");
         const widgetCard = document.getElementById("widgetCard");
+        const toggleInsightsBtn = document.getElementById("toggleInsightsBtn");
+        const insightsCard = document.getElementById("insightsCard");
+        const contentGrid = document.getElementById("contentGrid");
 
         const technicalTabBtn = document.getElementById("technicalTabBtn");
         const calendarTabBtn = document.getElementById("calendarTabBtn");
@@ -826,6 +1057,12 @@
             insightsSubtitle.textContent = technicalActive
                 ? `Technical analysis for ${getCleanSymbolName(currentSymbol)}`
                 : "Upcoming macro events";
+        }
+
+        function syncInsightsVisibility() {
+            insightsCard.classList.toggle("hidden", !insightsVisible);
+            contentGrid.classList.toggle("insights-hidden", !insightsVisible);
+            toggleInsightsBtn.textContent = insightsVisible ? "Hide Insights" : "Show Insights";
         }
 
         function updateHeader(widget) {
@@ -932,6 +1169,7 @@
         }
 
         function renderInsights() {
+            if (!insightsVisible) return;
             syncInsightsTabs();
             if (currentInsightsMode === "technical") {
                 renderTechnicalAnalysis();
@@ -940,15 +1178,72 @@
             }
         }
 
+        function isSessionOpen(hour, startHour, endHour) {
+            return hour >= startHour && hour < endHour;
+        }
+
+        function getHourInTimeZone(timeZone) {
+            const parts = new Intl.DateTimeFormat("en-GB", {
+                timeZone,
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            }).formatToParts(new Date());
+
+            return Number(parts.find(p => p.type === "hour").value);
+        }
+
+        function getFormattedTime(timeZone) {
+            return new Intl.DateTimeFormat("en-GB", {
+                timeZone,
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            }).format(new Date());
+        }
+
+        function updateSessionCard(timeElId, statusElId, dotElId, timeZone, startHour, endHour) {
+            const timeText = getFormattedTime(timeZone);
+            const hour = getHourInTimeZone(timeZone);
+            const open = isSessionOpen(hour, startHour, endHour);
+
+            document.getElementById(timeElId).textContent = timeText;
+            document.getElementById(statusElId).textContent = open ? "Open" : "Closed";
+            document.getElementById(dotElId).classList.toggle("open", open);
+
+            return open;
+        }
+
+        function updateSessions() {
+            const londonOpen = updateSessionCard("londonTime", "londonStatus", "londonDot", "Europe/London", 8, 17);
+            const newYorkOpen = updateSessionCard("newyorkTime", "newyorkStatus", "newyorkDot", "America/New_York", 8, 17);
+            const asiaOpen = updateSessionCard("asiaTime", "asiaStatus", "asiaDot", "Asia/Tokyo", 9, 18);
+
+            const overlapBadge = document.getElementById("overlapBadge");
+
+            if (londonOpen && newYorkOpen) {
+                overlapBadge.textContent = "London / New York overlap";
+                overlapBadge.classList.add("active");
+            } else if (asiaOpen && londonOpen) {
+                overlapBadge.textContent = "Asia / London transition";
+                overlapBadge.classList.add("active");
+            } else {
+                overlapBadge.textContent = "No major overlap";
+                overlapBadge.classList.remove("active");
+            }
+        }
+
         function loadWidget(index) {
             currentWidgetIndex = Number(index);
             indicatorSelect.value = currentWidgetIndex;
             syncThemeUI();
+            syncInsightsVisibility();
 
             const widget = widgets[currentWidgetIndex];
             updateHeader(widget);
             renderTradingView(widget);
             renderInsights();
+            updateSessions();
         }
 
         function applySelections() {
@@ -963,12 +1258,24 @@
             loadWidget(currentWidgetIndex);
         }
 
+        function toggleInsightsVisibility() {
+            insightsVisible = !insightsVisible;
+            syncInsightsVisibility();
+            if (insightsVisible) {
+                renderInsights();
+            }
+            setTimeout(() => {
+                renderTradingView(widgets[currentWidgetIndex]);
+            }, 120);
+        }
+
         function resetSelections() {
             currentWidgetIndex = defaultState.widgetIndex;
             currentSymbol = defaultState.symbol;
             currentInterval = defaultState.interval;
             currentTheme = defaultState.theme;
             currentInsightsMode = defaultState.insightsMode;
+            insightsVisible = defaultState.insightsVisible;
 
             symbolSelect.value = currentSymbol;
             intervalSelect.value = currentInterval;
@@ -992,6 +1299,7 @@
         resetBtn.addEventListener("click", resetSelections);
         refreshBtn.addEventListener("click", () => loadWidget(currentWidgetIndex));
         fullscreenBtn.addEventListener("click", toggleFullscreen);
+        toggleInsightsBtn.addEventListener("click", toggleInsightsVisibility);
 
         symbolSelect.addEventListener("change", applySelections);
         intervalSelect.addEventListener("change", applySelections);
@@ -1016,6 +1324,8 @@
 
         populateIndicators();
         loadWidget(0);
+        updateSessions();
+        setInterval(updateSessions, 60000);
     </script>
 </body>
 </html>
