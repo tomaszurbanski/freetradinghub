@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FreeTradingHub</title>
+    <title>FreeTradingHub Premium</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-1: #0b1020;
+            --bg-2: #111827;
+            --card: rgba(17, 24, 39, 0.82);
+            --border: rgba(255,255,255,0.08);
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --white: #ffffff;
+            --blue: #3b82f6;
+            --blue-2: #2563eb;
+            --shadow: 0 10px 30px rgba(0,0,0,0.28);
+            --radius: 20px;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background: #0b1020;
-            color: #e5e7eb;
+            background: var(--bg-1);
+            color: var(--text);
         }
 
         body {
@@ -26,31 +40,116 @@
                 linear-gradient(180deg, #0b1020 0%, #111827 100%);
         }
 
+        body.light-mode {
+            --bg-1: #eef2ff;
+            --bg-2: #f8fafc;
+            --card: rgba(255, 255, 255, 0.92);
+            --border: rgba(15,23,42,0.10);
+            --text: #0f172a;
+            --muted: #475569;
+            --white: #0f172a;
+            --shadow: 0 10px 30px rgba(15,23,42,0.10);
+            background:
+                radial-gradient(circle at top left, rgba(59,130,246,0.10), transparent 35%),
+                radial-gradient(circle at top right, rgba(16,185,129,0.08), transparent 30%),
+                linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
         .container {
-            width: min(1400px, 92%);
+            width: min(1450px, 92%);
             margin: 0 auto;
             padding: 30px 0 60px;
         }
 
         .hero {
             text-align: center;
-            padding: 40px 20px 24px;
+            padding: 32px 20px 20px;
+            position: relative;
         }
 
-        .hero h1 {
-            margin: 0;
-            font-size: clamp(32px, 5vw, 56px);
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: #ffffff;
+        .hero-topbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 18px;
         }
 
-        .hero p {
-            margin: 16px auto 0;
-            max-width: 760px;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #9ca3af;
+        .theme-toggle-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px);
+        }
+
+        body.light-mode .theme-toggle-box {
+            background: rgba(255,255,255,0.72);
+            border: 1px solid rgba(15,23,42,0.10);
+        }
+
+        .theme-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            user-select: none;
+        }
+
+        .theme-switch {
+            position: relative;
+            width: 68px;
+            height: 36px;
+            display: inline-block;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            inset: 0;
+            cursor: pointer;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid rgba(255,255,255,0.10);
+            transition: 0.25s ease;
+            border-radius: 999px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.35);
+        }
+
+        .theme-slider:before {
+            content: "";
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            left: 3px;
+            top: 3px;
+            background: linear-gradient(135deg, #ffffff, #cbd5e1);
+            border-radius: 50%;
+            transition: 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+
+        .theme-switch input:checked + .theme-slider {
+            background: linear-gradient(135deg, #bfdbfe, #60a5fa);
+            border-color: rgba(59,130,246,0.35);
+        }
+
+        .theme-switch input:checked + .theme-slider:before {
+            transform: translateX(32px);
+            background: linear-gradient(135deg, #ffffff, #eff6ff);
+        }
+
+        .theme-mode-text {
+            min-width: 42px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            user-select: none;
         }
 
         .hero-badge {
@@ -62,101 +161,322 @@
             background: rgba(255,255,255,0.05);
             color: #cbd5e1;
             font-size: 14px;
-            letter-spacing: 0.3px;
         }
 
-        .tabs-wrapper {
-            margin-top: 24px;
-            margin-bottom: 22px;
-            padding: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px;
-            background: rgba(17, 24, 39, 0.72);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+        body.light-mode .hero-badge {
+            border: 1px solid rgba(15,23,42,0.10);
+            background: rgba(255,255,255,0.8);
+            color: #334155;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(34px, 5vw, 58px);
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .top-panel,
+        .widget-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             backdrop-filter: blur(8px);
         }
 
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+        .top-panel {
+            padding: 16px;
+            margin-bottom: 18px;
         }
 
-        .tab-btn {
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.04);
-            color: #cbd5e1;
-            padding: 12px 18px;
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 180px 130px minmax(220px, 320px) auto auto;
+            gap: 12px;
+            align-items: end;
+            justify-content: start;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .control-select,
+        .control-btn {
+            height: 42px;
             border-radius: 12px;
-            cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+            outline: none;
         }
 
-        .tab-btn:hover {
+        .control-select {
+            width: 100%;
+            padding: 0 40px 0 12px;
+            background-color: #0f172a;
+            color: #f8fafc;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+            transition: all 0.2s ease;
+            background-image:
+                linear-gradient(45deg, transparent 50%, #cbd5e1 50%),
+                linear-gradient(135deg, #cbd5e1 50%, transparent 50%);
+            background-position:
+                calc(100% - 18px) calc(50% - 3px),
+                calc(100% - 12px) calc(50% - 3px);
+            background-size: 6px 6px, 6px 6px;
+            background-repeat: no-repeat;
+        }
+
+        body.light-mode .control-select {
+            background-color: #ffffff;
+            color: #0f172a;
+            border: 1px solid rgba(15,23,42,0.12);
+            box-shadow: inset 0 1px 0 rgba(15,23,42,0.03);
+            background-image:
+                linear-gradient(45deg, transparent 50%, #475569 50%),
+                linear-gradient(135deg, #475569 50%, transparent 50%);
+        }
+
+        .control-select:hover {
+            border-color: rgba(59,130,246,0.35);
+            background-color: #111827;
+        }
+
+        body.light-mode .control-select:hover {
+            background-color: #f8fafc;
+        }
+
+        .control-select:focus {
+            border-color: rgba(59,130,246,0.55);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.16);
+        }
+
+        .control-select option {
+            background: #0f172a;
+            color: #f8fafc;
+        }
+
+        body.light-mode .control-select option {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        .control-btn {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            padding: 0 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: #f8fafc;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-1px);
             background: rgba(59,130,246,0.14);
             border-color: rgba(59,130,246,0.30);
             color: #ffffff;
-            transform: translateY(-1px);
         }
 
-        .tab-btn.active {
+        .control-btn.primary {
             background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
-            border-color: rgba(96,165,250,0.5);
             color: #ffffff;
-            box-shadow: 0 8px 20px rgba(37,99,235,0.28);
+            border-color: rgba(96,165,250,0.4);
+        }
+
+        .control-btn.primary:hover {
+            background: linear-gradient(135deg, rgba(37,99,235,1), rgba(29,78,216,1));
+            color: #ffffff;
+        }
+
+        body.light-mode .control-btn {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid rgba(15,23,42,0.12);
+        }
+
+        body.light-mode .control-btn:hover {
+            background: rgba(59,130,246,0.10);
+            color: #0f172a;
+            border-color: rgba(59,130,246,0.30);
+        }
+
+        body.light-mode .control-btn.primary {
+            background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
+            color: #ffffff;
+            border-color: rgba(96,165,250,0.4);
+        }
+
+        body.light-mode .control-btn.primary:hover {
+            background: linear-gradient(135deg, rgba(37,99,235,1), rgba(29,78,216,1));
+            color: #ffffff;
         }
 
         .widget-card {
-            background: rgba(17, 24, 39, 0.82);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.28);
-            backdrop-filter: blur(8px);
         }
 
         .widget-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 14px;
             padding: 18px 22px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
             background: rgba(255,255,255,0.02);
         }
 
-        .widget-title {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 700;
-            color: #f9fafb;
+        body.light-mode .widget-header {
+            border-bottom: 1px solid rgba(15,23,42,0.08);
+            background: rgba(255,255,255,0.55);
         }
 
-        .widget-subtitle {
-            font-size: 13px;
-            color: #9ca3af;
-            background: rgba(59,130,246,0.12);
-            border: 1px solid rgba(59,130,246,0.25);
+        .widget-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .widget-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .widget-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .widget-chip {
+            font-size: 12px;
+            color: var(--muted);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
             padding: 6px 10px;
             border-radius: 999px;
-            white-space: nowrap;
+        }
+
+        body.light-mode .widget-chip {
+            background: rgba(15,23,42,0.03);
+            border: 1px solid rgba(15,23,42,0.08);
+            color: #475569;
+        }
+
+        .widget-chip.primary {
+            background: rgba(59,130,246,0.12);
+            border-color: rgba(59,130,246,0.25);
+            color: #dbeafe;
+        }
+
+        body.light-mode .widget-chip.primary {
+            color: #1d4ed8;
+        }
+
+        .widget-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mini-btn {
+            height: 38px;
+            padding: 0 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.light-mode .mini-btn {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.10);
+            color: #0f172a;
+        }
+
+        .mini-btn:hover {
+            background: rgba(59,130,246,0.14);
+            border-color: rgba(59,130,246,0.30);
+        }
+
+        body.light-mode .mini-btn:hover {
+            color: #0f172a;
+        }
+
+        .chart-wrap {
+            padding: 14px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
         }
 
         .tradingview_container {
             width: 100%;
-            height: 760px;
+            height: 860px;
+            border-radius: 18px;
+            overflow: hidden;
             background: #0f172a;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        body.light-mode .tradingview_container {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.08);
         }
 
         .footer {
             margin-top: 36px;
             text-align: center;
-            color: #6b7280;
+            color: var(--muted);
             font-size: 14px;
+        }
+
+        .fullscreen-mode {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9999;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            background: var(--bg-1) !important;
+        }
+
+        .fullscreen-mode .tradingview_container {
+            height: calc(100vh - 92px) !important;
+            border-radius: 0 !important;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        @media (max-width: 1100px) {
+            .controls-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-topbar {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -169,8 +489,8 @@
                 padding: 20px 10px 20px;
             }
 
-            .hero p {
-                font-size: 16px;
+            .controls-grid {
+                grid-template-columns: 1fr;
             }
 
             .widget-header {
@@ -186,13 +506,16 @@
                 height: 620px;
             }
 
-            .tab-btn {
-                padding: 10px 14px;
-                font-size: 13px;
+            .widget-actions {
+                width: 100%;
             }
 
-            .tabs {
-                justify-content: flex-start;
+            .mini-btn {
+                flex: 1;
+            }
+
+            .theme-toggle-box {
+                padding: 10px 12px;
             }
         }
     </style>
@@ -200,28 +523,85 @@
 <body>
     <div class="container">
         <section class="hero">
+            <div class="hero-topbar">
+                <div class="theme-toggle-box">
+                    <span class="theme-label">Theme</span>
+                    <label class="theme-switch" for="themeToggle">
+                        <input type="checkbox" id="themeToggle" />
+                        <span class="theme-slider"></span>
+                    </label>
+                    <span class="theme-mode-text" id="themeModeText">Dark</span>
+                </div>
+            </div>
+
             <div class="hero-badge">FreeTradingHub • Premium Indicators</div>
             <h1>TradingView Indicators Hub</h1>
-            <p>
-                A collection of trading indicators and tools for market analysis.
-            </p>
         </section>
 
-        <section class="tabs-wrapper">
-            <div class="tabs" id="tabs"></div>
-        </section>
+        <section class="top-panel">
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label class="control-label" for="symbolSelect">Symbol</label>
+                    <select class="control-select" id="symbolSelect">
+                        <option value="OANDA:XAUUSD">XAUUSD</option>
+                        <option value="OANDA:GBPUSD">GBPUSD</option>
+                        <option value="OANDA:EURUSD">EURUSD</option>
+                        <option value="OANDA:USDJPY">USDJPY</option>
+                        <option value="OANDA:NAS100USD">NAS100</option>
+                        <option value="OANDA:SPX500USD">SPX500</option>
+                        <option value="BINANCE:BTCUSDT">BTCUSDT</option>
+                        <option value="BINANCE:ETHUSDT">ETHUSDT</option>
+                    </select>
+                </div>
 
-        <section class="widget-card">
-            <div class="widget-header">
-                <h2 class="widget-title" id="active-widget-title">Algo TEM</h2>
-                <div class="widget-subtitle" id="active-widget-badge">XAUUSD • 5m</div>
+                <div class="control-group">
+                    <label class="control-label" for="intervalSelect">Interval</label>
+                    <select class="control-select" id="intervalSelect">
+                        <option value="1">1m</option>
+                        <option value="3">3m</option>
+                        <option value="5" selected>5m</option>
+                        <option value="15">15m</option>
+                        <option value="30">30m</option>
+                        <option value="60">1H</option>
+                        <option value="240">4H</option>
+                        <option value="D">1D</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="indicatorSelect">Indicator</label>
+                    <select class="control-select" id="indicatorSelect"></select>
+                </div>
+
+                <button class="control-btn primary" id="applyBtn">Apply</button>
+                <button class="control-btn" id="resetBtn">Reset</button>
             </div>
-            <div class="tradingview_container" id="tradingview_chart"></div>
         </section>
 
-        <div class="footer">
-            © FreeTradingHub
-        </div>
+        <section class="widget-card" id="widgetCard">
+            <div class="widget-header">
+                <div class="widget-header-left">
+                    <h2 class="widget-title" id="active-widget-title">Algo TEM</h2>
+                    <div class="widget-meta">
+                        <div class="widget-chip primary" id="active-widget-badge">XAUUSD • 5m</div>
+                        <div class="widget-chip" id="active-symbol-chip">Symbol: XAUUSD</div>
+                        <div class="widget-chip" id="active-interval-chip">Interval: 5m</div>
+                        <div class="widget-chip" id="active-theme-chip">Theme: Dark</div>
+                    </div>
+                </div>
+
+                <div class="widget-actions">
+                    <button class="mini-btn" id="refreshBtn">Refresh Chart</button>
+                    <button class="mini-btn" id="fullscreenBtn">Fullscreen</button>
+                </div>
+            </div>
+
+            <div class="chart-wrap">
+                <div class="tradingview_container" id="tradingview_chart"></div>
+            </div>
+        </section>
+
+        <div class="footer">© FreeTradingHub</div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -229,7 +609,6 @@
     <script>
         const widgets = [
             { name: "Algo TEM", studies: ["PUB;6d33b3b8db6a4593b2558596805e5bd4"] },
-            /*{ name: "ANN", studies: ["PUB;8aaf9bc7fa9444cb8edf174e3a0d8f31"] },*/
             { name: "Sniper Pro", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
             { name: "Nexus", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
             { name: "Golden Era New", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
@@ -253,21 +632,86 @@
             { name: "Vumacha", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
         ];
 
-        const tabsContainer = document.getElementById("tabs");
+        const defaultState = {
+            widgetIndex: 0,
+            symbol: "OANDA:XAUUSD",
+            interval: "5",
+            theme: "dark"
+        };
+
+        let currentWidgetIndex = defaultState.widgetIndex;
+        let currentSymbol = defaultState.symbol;
+        let currentInterval = defaultState.interval;
+        let currentTheme = defaultState.theme;
+
         const activeWidgetTitle = document.getElementById("active-widget-title");
         const activeWidgetBadge = document.getElementById("active-widget-badge");
+        const activeSymbolChip = document.getElementById("active-symbol-chip");
+        const activeIntervalChip = document.getElementById("active-interval-chip");
+        const activeThemeChip = document.getElementById("active-theme-chip");
         const chartContainerId = "tradingview_chart";
 
-        function renderTabs(activeIndex) {
-            tabsContainer.innerHTML = "";
+        const symbolSelect = document.getElementById("symbolSelect");
+        const intervalSelect = document.getElementById("intervalSelect");
+        const indicatorSelect = document.getElementById("indicatorSelect");
+        const themeToggle = document.getElementById("themeToggle");
+        const themeModeText = document.getElementById("themeModeText");
+
+        const applyBtn = document.getElementById("applyBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const refreshBtn = document.getElementById("refreshBtn");
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
+        const widgetCard = document.getElementById("widgetCard");
+
+        function populateIndicators() {
+            indicatorSelect.innerHTML = "";
 
             widgets.forEach((widget, index) => {
-                const btn = document.createElement("button");
-                btn.className = "tab-btn" + (index === activeIndex ? " active" : "");
-                btn.textContent = widget.name;
-                btn.addEventListener("click", () => loadWidget(index));
-                tabsContainer.appendChild(btn);
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = widget.name;
+                indicatorSelect.appendChild(option);
             });
+
+            indicatorSelect.value = currentWidgetIndex;
+        }
+
+        function getCleanSymbolName(fullSymbol) {
+            const parts = fullSymbol.split(":");
+            return parts.length > 1 ? parts[1] : fullSymbol;
+        }
+
+        function getIntervalLabel(interval) {
+            const labels = {
+                "1": "1m",
+                "3": "3m",
+                "5": "5m",
+                "15": "15m",
+                "30": "30m",
+                "60": "1H",
+                "240": "4H",
+                "D": "1D"
+            };
+            return labels[interval] || interval;
+        }
+
+        function syncThemeUI() {
+            const isLight = currentTheme === "light";
+            document.body.classList.toggle("light-mode", isLight);
+            themeToggle.checked = isLight;
+            themeModeText.textContent = isLight ? "Light" : "Dark";
+        }
+
+        function updateHeader(widget) {
+            const cleanSymbol = getCleanSymbolName(currentSymbol);
+            const intervalLabel = getIntervalLabel(currentInterval);
+            const themeLabel = currentTheme === "light" ? "Light" : "Dark";
+
+            activeWidgetTitle.textContent = widget.name;
+            activeWidgetBadge.textContent = `${cleanSymbol} • ${intervalLabel}`;
+            activeSymbolChip.textContent = `Symbol: ${cleanSymbol}`;
+            activeIntervalChip.textContent = `Interval: ${intervalLabel}`;
+            activeThemeChip.textContent = `Theme: ${themeLabel}`;
         }
 
         function renderTradingView(widget) {
@@ -276,38 +720,115 @@
 
             new TradingView.widget({
                 container_id: chartContainerId,
-                width: "100%",
-                height: "900",
-                symbol: "OANDA:XAUUSD",
-                interval: "5",
+                autosize: true,
+                symbol: currentSymbol,
+                interval: currentInterval,
                 timezone: "Europe/Berlin",
-                theme: "dark",
+                theme: currentTheme,
                 style: "1",
-                locale: "pl",
-                toolbar_bg: "#111827",
+                locale: "en",
+                toolbar_bg: currentTheme === "light" ? "#f8fafc" : "#111827",
+                allow_symbol_change: true,
                 hide_legend: false,
                 hide_side_toolbar: false,
                 hide_top_toolbar: false,
+                withdateranges: true,
+                details: true,
+                hotlist: true,
+                calendar: true,
+                save_image: true,
                 enable_publishing: false,
-                allow_symbol_change: true,
                 hide_volume: true,
-                studies: widget.studies
+                studies: widget.studies,
+                studies_overrides: {
+                    "volume.volume.color.0": "rgba(0,0,0,0)",
+                    "volume.volume.color.1": "rgba(0,0,0,0)",
+                    "volume.volume.transparency": 100
+                },
+                overrides: currentTheme === "light" ? {
+                    "paneProperties.background": "#ffffff",
+                    "paneProperties.vertGridProperties.color": "rgba(15,23,42,0.06)",
+                    "paneProperties.horzGridProperties.color": "rgba(15,23,42,0.06)",
+                    "scalesProperties.textColor": "#475569",
+                    "mainSeriesProperties.showCountdown": false
+                } : {
+                    "paneProperties.background": "#0f172a",
+                    "paneProperties.vertGridProperties.color": "rgba(255,255,255,0.05)",
+                    "paneProperties.horzGridProperties.color": "rgba(255,255,255,0.05)",
+                    "scalesProperties.textColor": "#94a3b8",
+                    "mainSeriesProperties.showCountdown": false
+                }
             });
         }
 
         function loadWidget(index) {
-            const widget = widgets[index];
-            activeWidgetTitle.textContent = widget.name;
-            activeWidgetBadge.textContent = "XAUUSD • 5m";
-            renderTabs(index);
+            currentWidgetIndex = Number(index);
+            indicatorSelect.value = currentWidgetIndex;
+            syncThemeUI();
+
+            const widget = widgets[currentWidgetIndex];
+            updateHeader(widget);
             renderTradingView(widget);
         }
 
+        function applySelections() {
+            currentSymbol = symbolSelect.value;
+            currentInterval = intervalSelect.value;
+            currentWidgetIndex = Number(indicatorSelect.value);
+            loadWidget(currentWidgetIndex);
+        }
+
+        function toggleTheme() {
+            currentTheme = themeToggle.checked ? "light" : "dark";
+            loadWidget(currentWidgetIndex);
+        }
+
+        function resetSelections() {
+            currentWidgetIndex = defaultState.widgetIndex;
+            currentSymbol = defaultState.symbol;
+            currentInterval = defaultState.interval;
+            currentTheme = defaultState.theme;
+
+            symbolSelect.value = currentSymbol;
+            intervalSelect.value = currentInterval;
+            indicatorSelect.value = currentWidgetIndex;
+
+            loadWidget(currentWidgetIndex);
+        }
+
+        function toggleFullscreen() {
+            widgetCard.classList.toggle("fullscreen-mode");
+
+            fullscreenBtn.textContent = widgetCard.classList.contains("fullscreen-mode")
+                ? "Exit Fullscreen"
+                : "Fullscreen";
+
+            setTimeout(() => {
+                loadWidget(currentWidgetIndex);
+            }, 150);
+        }
+
+        applyBtn.addEventListener("click", applySelections);
+        resetBtn.addEventListener("click", resetSelections);
+        refreshBtn.addEventListener("click", () => loadWidget(currentWidgetIndex));
+        fullscreenBtn.addEventListener("click", toggleFullscreen);
+
+        symbolSelect.addEventListener("change", applySelections);
+        intervalSelect.addEventListener("change", applySelections);
+        indicatorSelect.addEventListener("change", applySelections);
+        themeToggle.addEventListener("change", toggleTheme);
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && widgetCard.classList.contains("fullscreen-mode")) {
+                toggleFullscreen();
+            }
+        });
+
+        populateIndicators();
         loadWidget(0);
     </script>
 </body>
 </html>
-
 
 
 
