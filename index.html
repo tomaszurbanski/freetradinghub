@@ -607,30 +607,30 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
     <script>
-        const widgets = [
-            { name: "Algo TEM", studies: ["PUB;6d33b3b8db6a4593b2558596805e5bd4"] },
-            { name: "Sniper Pro", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
-            { name: "Nexus", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
-            { name: "Golden Era New", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
-            { name: "Quantum", studies: ["PUB;3b86bd1192124fd98583490bb7508041"] },
-            { name: "Wolf X", studies: ["PUB;862506c546514212b9728a634dbc7152"] },
-            { name: "Trend Wave", studies: [
-                "PUB;f6e13cfa8fb1462493984f329925c02b",
-                "PUB;6ac2587549144bc9a8cd6ae15730895b",
-                "PUB;af2dc588b5f34409a046f96b625c9b6b",
-                "PUB;06fc6d6e9252415c9afdac437e0764dc"
-            ]},
-            { name: "Trend Wave Pro", studies: ["PUB;00ec48baf0ee43f0a43e1658bb54cdab", "PUB;38080827cf244587b5e7dbb9f272db0a"] },
-            { name: "Smartmonics", studies: ["PUB;ec7a7c1c91c645519b35b9505b4169a9", "PUB;5bdd7bb857ba48d68bf573c3fe0a08c3"] },
-            { name: "Liquidity Flow", studies: ["PUB;cfb67dca49e94b5ca341ab4c1bcf4d37", "PUB;b7b3fe63710742cb9f7db5bfa9695e5a"] },
-            { name: "Sniper", studies: ["PUB;717dd00ad9c1445b84b39adfb5ed5f3d", "PUB;903a688ad7a34daf86cdd8c287df09cc"] },
-            { name: "Price Hunter", studies: ["PUB;ba1af294fd5047fbbf5cfd0f66697725"] },
-            { name: "Smart Scanner", studies: ["PUB;e378ef7473b14614a6b1fc5d4bba8061", "PUB;c4c0ec8c41b94497af0b385320c73964"] },
-            { name: "Kill Shot", studies: ["PUB;e27eb354ed22477295be9c628e937a89"] },
-            { name: "Indices Strategy", studies: ["PUB;f69d6a362b144d35a921707e4492d5c5", "PUB;4c1f3d8d7f314e2e9dcd28b1f707752e"] },
-            { name: "LUX Support and Resistance", studies: ["PUB;NXS6SoOdr880Hrvh9vA36UcAjC14bOkc"] },
-            { name: "Vumacha", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
-        ];
+		const widgets = [
+			{ name: "Aether", studies: ["PUB;6d33b3b8db6a4593b2558596805e5bd4"] },
+			{ name: "Falcon One", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
+			{ name: "Axis", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
+			{ name: "Aurora", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
+			{ name: "Quanta", studies: ["PUB;3b86bd1192124fd98583490bb7508041"] },
+			{ name: "Lynx", studies: ["PUB;862506c546514212b9728a634dbc7152"] },
+			{ name: "Drift", studies: [
+				"PUB;f6e13cfa8fb1462493984f329925c02b",
+				"PUB;6ac2587549144bc9a8cd6ae15730895b",
+				"PUB;af2dc588b5f34409a046f96b625c9b6b",
+				"PUB;06fc6d6e9252415c9afdac437e0764dc"
+			]},
+			{ name: "Drift Elite", studies: ["PUB;00ec48baf0ee43f0a43e1658bb54cdab", "PUB;38080827cf244587b5e7dbb9f272db0a"] },
+			{ name: "Syntra", studies: ["PUB;ec7a7c1c91c645519b35b9505b4169a9", "PUB;5bdd7bb857ba48d68bf573c3fe0a08c3"] },
+			{ name: "Flux", studies: ["PUB;cfb67dca49e94b5ca341ab4c1bcf4d37", "PUB;b7b3fe63710742cb9f7db5bfa9695e5a"] },
+			{ name: "Focus", studies: ["PUB;717dd00ad9c1445b84b39adfb5ed5f3d", "PUB;903a688ad7a34daf86cdd8c287df09cc"] },
+			{ name: "Spectra", studies: ["PUB;ba1af294fd5047fbbf5cfd0f66697725"] },
+			{ name: "Scout", studies: ["PUB;e378ef7473b14614a6b1fc5d4bba8061", "PUB;c4c0ec8c41b94497af0b385320c73964"] },
+			{ name: "Strike", studies: ["PUB;e27eb354ed22477295be9c628e937a89"] },
+			{ name: "Atlas Index", studies: ["PUB;f69d6a362b144d35a921707e4492d5c5", "PUB;4c1f3d8d7f314e2e9dcd28b1f707752e"] },
+			{ name: "Levels", studies: ["PUB;NXS6SoOdr880Hrvh9vA36UcAjC14bOkc"] },
+			{ name: "Vanta", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
+		];
 
         const defaultState = {
             widgetIndex: 0,
@@ -829,14 +829,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
