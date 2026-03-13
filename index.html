@@ -18,8 +18,6 @@
             --text: #e5e7eb;
             --muted: #9ca3af;
             --white: #ffffff;
-            --blue: #3b82f6;
-            --blue-2: #2563eb;
             --shadow: 0 10px 30px rgba(0,0,0,0.28);
             --radius: 20px;
         }
@@ -56,7 +54,7 @@
         }
 
         .container {
-            width: min(1450px, 92%);
+            width: min(1600px, 94%);
             margin: 0 auto;
             padding: 30px 0 60px;
         }
@@ -177,7 +175,8 @@
         }
 
         .top-panel,
-        .widget-card {
+        .widget-card,
+        .insights-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -299,11 +298,6 @@
             border-color: rgba(96,165,250,0.4);
         }
 
-        .control-btn.primary:hover {
-            background: linear-gradient(135deg, rgba(37,99,235,1), rgba(29,78,216,1));
-            color: #ffffff;
-        }
-
         body.light-mode .control-btn {
             background: #ffffff;
             color: #0f172a;
@@ -317,21 +311,24 @@
         }
 
         body.light-mode .control-btn.primary {
-            background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
-            color: #ffffff;
-            border-color: rgba(96,165,250,0.4);
-        }
-
-        body.light-mode .control-btn.primary:hover {
-            background: linear-gradient(135deg, rgba(37,99,235,1), rgba(29,78,216,1));
             color: #ffffff;
         }
 
-        .widget-card {
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 390px;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .widget-card,
+        .insights-card {
             overflow: hidden;
+            min-width: 0;
         }
 
-        .widget-header {
+        .widget-header,
+        .insights-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -341,7 +338,8 @@
             background: rgba(255,255,255,0.02);
         }
 
-        body.light-mode .widget-header {
+        body.light-mode .widget-header,
+        body.light-mode .insights-header {
             border-bottom: 1px solid rgba(15,23,42,0.08);
             background: rgba(255,255,255,0.55);
         }
@@ -352,11 +350,21 @@
             gap: 8px;
         }
 
-        .widget-title {
+        .widget-title,
+        .insights-title {
             margin: 0;
             font-size: 24px;
             font-weight: 800;
             color: var(--white);
+        }
+
+        .insights-title {
+            font-size: 20px;
+        }
+
+        .insights-subtitle {
+            font-size: 12px;
+            color: var(--muted);
         }
 
         .widget-meta {
@@ -420,11 +428,8 @@
             border-color: rgba(59,130,246,0.30);
         }
 
-        body.light-mode .mini-btn:hover {
-            color: #0f172a;
-        }
-
-        .chart-wrap {
+        .chart-wrap,
+        .insights-wrap {
             padding: 14px;
             background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
         }
@@ -441,6 +446,67 @@
         body.light-mode .tradingview_container {
             background: #ffffff;
             border: 1px solid rgba(15,23,42,0.08);
+        }
+
+        .insights-tabs {
+            display: flex;
+            gap: 10px;
+            padding: 0 14px 14px;
+            margin-top: -2px;
+        }
+
+        .insights-tab-btn {
+            flex: 1;
+            height: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: var(--text);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .insights-tab-btn:hover {
+            background: rgba(59,130,246,0.14);
+            border-color: rgba(59,130,246,0.30);
+        }
+
+        .insights-tab-btn.active {
+            background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(37,99,235,0.95));
+            color: #ffffff;
+            border-color: rgba(96,165,250,0.4);
+        }
+
+        body.light-mode .insights-tab-btn {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.10);
+            color: #0f172a;
+        }
+
+        body.light-mode .insights-tab-btn.active {
+            color: #ffffff;
+        }
+
+        .insights-shell {
+            width: 100%;
+            height: 806px;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #0f172a;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        body.light-mode .insights-shell {
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.08);
+        }
+
+        .insights-shell .tradingview-widget-container,
+        .insights-shell .tradingview-widget-container__widget {
+            width: 100%;
+            height: 100%;
         }
 
         .footer {
@@ -467,6 +533,16 @@
             border-left: none;
             border-right: none;
             border-bottom: none;
+        }
+
+        @media (max-width: 1280px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .insights-shell {
+                height: 560px;
+            }
         }
 
         @media (max-width: 1100px) {
@@ -506,16 +582,16 @@
                 height: 620px;
             }
 
+            .insights-shell {
+                height: 520px;
+            }
+
             .widget-actions {
                 width: 100%;
             }
 
             .mini-btn {
                 flex: 1;
-            }
-
-            .theme-toggle-box {
-                padding: 10px 12px;
             }
         }
     </style>
@@ -578,27 +654,51 @@
             </div>
         </section>
 
-        <section class="widget-card" id="widgetCard">
-            <div class="widget-header">
-                <div class="widget-header-left">
-                    <h2 class="widget-title" id="active-widget-title">Algo TEM</h2>
-                    <div class="widget-meta">
-                        <div class="widget-chip primary" id="active-widget-badge">XAUUSD • 5m</div>
-                        <div class="widget-chip" id="active-symbol-chip">Symbol: XAUUSD</div>
-                        <div class="widget-chip" id="active-interval-chip">Interval: 5m</div>
-                        <div class="widget-chip" id="active-theme-chip">Theme: Dark</div>
+        <section class="content-grid">
+            <section class="widget-card" id="widgetCard">
+                <div class="widget-header">
+                    <div class="widget-header-left">
+                        <h2 class="widget-title" id="active-widget-title">Aether</h2>
+                        <div class="widget-meta">
+                            <div class="widget-chip primary" id="active-widget-badge">XAUUSD • 5m</div>
+                            <div class="widget-chip" id="active-symbol-chip">Symbol: XAUUSD</div>
+                            <div class="widget-chip" id="active-interval-chip">Interval: 5m</div>
+                            <div class="widget-chip" id="active-theme-chip">Theme: Dark</div>
+                        </div>
+                    </div>
+
+                    <div class="widget-actions">
+                        <button class="mini-btn" id="refreshBtn">Refresh Chart</button>
+                        <button class="mini-btn" id="fullscreenBtn">Fullscreen</button>
                     </div>
                 </div>
 
-                <div class="widget-actions">
-                    <button class="mini-btn" id="refreshBtn">Refresh Chart</button>
-                    <button class="mini-btn" id="fullscreenBtn">Fullscreen</button>
+                <div class="chart-wrap">
+                    <div class="tradingview_container" id="tradingview_chart"></div>
                 </div>
-            </div>
+            </section>
 
-            <div class="chart-wrap">
-                <div class="tradingview_container" id="tradingview_chart"></div>
-            </div>
+            <aside class="insights-card">
+                <div class="insights-header">
+                    <div>
+                        <h3 class="insights-title">Insights</h3>
+                        <div class="insights-subtitle" id="insightsSubtitle">Technical analysis for current symbol</div>
+                    </div>
+                </div>
+
+                <div class="insights-wrap">
+                    <div class="insights-tabs">
+                        <button class="insights-tab-btn active" id="technicalTabBtn" type="button">Technical</button>
+                        <button class="insights-tab-btn" id="calendarTabBtn" type="button">Calendar</button>
+                    </div>
+
+                    <div class="insights-shell">
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget" id="tradingview_insights"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </section>
 
         <div class="footer">© FreeTradingHub</div>
@@ -607,49 +707,50 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
     <script>
-		const widgets = [
-			{ name: "Aether", studies: ["PUB;6d33b3b8db6a4593b2558596805e5bd4"] },
-			{ name: "Falcon One", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
-			{ name: "Axis", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
-			{ name: "Aurora", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
-			{ name: "Quanta", studies: ["PUB;3b86bd1192124fd98583490bb7508041"] },
-			{ name: "Lynx", studies: ["PUB;862506c546514212b9728a634dbc7152"] },
-			{ name: "Drift", studies: [
-				"PUB;f6e13cfa8fb1462493984f329925c02b",
-				"PUB;6ac2587549144bc9a8cd6ae15730895b",
-				"PUB;af2dc588b5f34409a046f96b625c9b6b",
-				"PUB;06fc6d6e9252415c9afdac437e0764dc"
-			]},
-			{ name: "Drift Elite", studies: ["PUB;00ec48baf0ee43f0a43e1658bb54cdab", "PUB;38080827cf244587b5e7dbb9f272db0a"] },
-			{ name: "Syntra", studies: ["PUB;ec7a7c1c91c645519b35b9505b4169a9", "PUB;5bdd7bb857ba48d68bf573c3fe0a08c3"] },
-			{ name: "Flux", studies: ["PUB;cfb67dca49e94b5ca341ab4c1bcf4d37", "PUB;b7b3fe63710742cb9f7db5bfa9695e5a"] },
-			{ name: "Focus", studies: ["PUB;717dd00ad9c1445b84b39adfb5ed5f3d", "PUB;903a688ad7a34daf86cdd8c287df09cc"] },
-			{ name: "Spectra", studies: ["PUB;ba1af294fd5047fbbf5cfd0f66697725"] },
-			{ name: "Scout", studies: ["PUB;e378ef7473b14614a6b1fc5d4bba8061", "PUB;c4c0ec8c41b94497af0b385320c73964"] },
-			{ name: "Strike", studies: ["PUB;e27eb354ed22477295be9c628e937a89"] },
-			{ name: "Atlas Index", studies: ["PUB;f69d6a362b144d35a921707e4492d5c5", "PUB;4c1f3d8d7f314e2e9dcd28b1f707752e"] },
-			{ name: "Levels", studies: ["PUB;NXS6SoOdr880Hrvh9vA36UcAjC14bOkc"] },
-			{ name: "Vanta", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
-		];
+        const widgets = [
+            { name: "Aether", studies: ["PUB;6d33b3b8db6a4593b2558596805e5bd4"] },
+            { name: "Falcon One", studies: ["PUB;6c003d30b2154ef3a31074d5c703954f", "PUB;e6adb5e5246c43f4a8dcffde5c98db4e", "PUB;162198dcae874d5da28f7b048feb76e7", "PUB;b6587ba7dc7b4489927cfd94d1fb8a9f", "PUB;0bf15eb0edba447f84e19fce69391ccb"] },
+            { name: "Axis", studies: ["PUB;ae6d252afb6d44a68ddd3b4d587388f4"] },
+            { name: "Aurora", studies: ["PUB;51017c1544164998b0fbb32d5463961c"] },
+            { name: "Quanta", studies: ["PUB;3b86bd1192124fd98583490bb7508041"] },
+            { name: "Lynx", studies: ["PUB;862506c546514212b9728a634dbc7152"] },
+            { name: "Drift", studies: [
+                "PUB;f6e13cfa8fb1462493984f329925c02b",
+                "PUB;6ac2587549144bc9a8cd6ae15730895b",
+                "PUB;af2dc588b5f34409a046f96b625c9b6b",
+                "PUB;06fc6d6e9252415c9afdac437e0764dc"
+            ]},
+            { name: "Drift Elite", studies: ["PUB;00ec48baf0ee43f0a43e1658bb54cdab", "PUB;38080827cf244587b5e7dbb9f272db0a"] },
+            { name: "Syntra", studies: ["PUB;ec7a7c1c91c645519b35b9505b4169a9", "PUB;5bdd7bb857ba48d68bf573c3fe0a08c3"] },
+            { name: "Flux", studies: ["PUB;cfb67dca49e94b5ca341ab4c1bcf4d37", "PUB;b7b3fe63710742cb9f7db5bfa9695e5a"] },
+            { name: "Focus", studies: ["PUB;717dd00ad9c1445b84b39adfb5ed5f3d", "PUB;903a688ad7a34daf86cdd8c287df09cc"] },
+            { name: "Spectra", studies: ["PUB;ba1af294fd5047fbbf5cfd0f66697725"] },
+            { name: "Scout", studies: ["PUB;e378ef7473b14614a6b1fc5d4bba8061", "PUB;c4c0ec8c41b94497af0b385320c73964"] },
+            { name: "Strike", studies: ["PUB;e27eb354ed22477295be9c628e937a89"] },
+            { name: "Atlas Index", studies: ["PUB;f69d6a362b144d35a921707e4492d5c5", "PUB;4c1f3d8d7f314e2e9dcd28b1f707752e"] },
+            { name: "Levels", studies: ["PUB;NXS6SoOdr880Hrvh9vA36UcAjC14bOkc"] },
+            { name: "Vanta", studies: ["PUB;uA35GeckoTA2EfgI63SD2WCSmca4njxp"] }
+        ];
 
         const defaultState = {
             widgetIndex: 0,
             symbol: "OANDA:XAUUSD",
             interval: "5",
-            theme: "dark"
+            theme: "dark",
+            insightsMode: "technical"
         };
 
         let currentWidgetIndex = defaultState.widgetIndex;
         let currentSymbol = defaultState.symbol;
         let currentInterval = defaultState.interval;
         let currentTheme = defaultState.theme;
+        let currentInsightsMode = defaultState.insightsMode;
 
         const activeWidgetTitle = document.getElementById("active-widget-title");
         const activeWidgetBadge = document.getElementById("active-widget-badge");
         const activeSymbolChip = document.getElementById("active-symbol-chip");
         const activeIntervalChip = document.getElementById("active-interval-chip");
         const activeThemeChip = document.getElementById("active-theme-chip");
-        const chartContainerId = "tradingview_chart";
 
         const symbolSelect = document.getElementById("symbolSelect");
         const intervalSelect = document.getElementById("intervalSelect");
@@ -663,16 +764,18 @@
         const fullscreenBtn = document.getElementById("fullscreenBtn");
         const widgetCard = document.getElementById("widgetCard");
 
+        const technicalTabBtn = document.getElementById("technicalTabBtn");
+        const calendarTabBtn = document.getElementById("calendarTabBtn");
+        const insightsSubtitle = document.getElementById("insightsSubtitle");
+
         function populateIndicators() {
             indicatorSelect.innerHTML = "";
-
             widgets.forEach((widget, index) => {
                 const option = document.createElement("option");
                 option.value = index;
                 option.textContent = widget.name;
                 indicatorSelect.appendChild(option);
             });
-
             indicatorSelect.value = currentWidgetIndex;
         }
 
@@ -695,11 +798,34 @@
             return labels[interval] || interval;
         }
 
+        function getTechnicalInterval(interval) {
+            const map = {
+                "1": "1m",
+                "3": "5m",
+                "5": "5m",
+                "15": "15m",
+                "30": "30m",
+                "60": "1h",
+                "240": "4h",
+                "D": "1D"
+            };
+            return map[interval] || "1h";
+        }
+
         function syncThemeUI() {
             const isLight = currentTheme === "light";
             document.body.classList.toggle("light-mode", isLight);
             themeToggle.checked = isLight;
             themeModeText.textContent = isLight ? "Light" : "Dark";
+        }
+
+        function syncInsightsTabs() {
+            const technicalActive = currentInsightsMode === "technical";
+            technicalTabBtn.classList.toggle("active", technicalActive);
+            calendarTabBtn.classList.toggle("active", !technicalActive);
+            insightsSubtitle.textContent = technicalActive
+                ? `Technical analysis for ${getCleanSymbolName(currentSymbol)}`
+                : "Upcoming macro events";
         }
 
         function updateHeader(widget) {
@@ -715,11 +841,11 @@
         }
 
         function renderTradingView(widget) {
-            const container = document.getElementById(chartContainerId);
+            const container = document.getElementById("tradingview_chart");
             container.innerHTML = "";
 
             new TradingView.widget({
-                container_id: chartContainerId,
+                container_id: "tradingview_chart",
                 autosize: true,
                 symbol: currentSymbol,
                 interval: currentInterval,
@@ -733,9 +859,9 @@
                 hide_side_toolbar: false,
                 hide_top_toolbar: false,
                 withdateranges: true,
-                details: true,
-                hotlist: true,
-                calendar: true,
+                details: false,
+                hotlist: false,
+                calendar: false,
                 save_image: true,
                 enable_publishing: false,
                 hide_volume: true,
@@ -761,6 +887,59 @@
             });
         }
 
+        function renderTechnicalAnalysis() {
+            const container = document.getElementById("tradingview_insights");
+            container.innerHTML = "";
+
+            const script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
+            script.async = true;
+            script.innerHTML = JSON.stringify({
+                interval: getTechnicalInterval(currentInterval),
+                width: "100%",
+                isTransparent: true,
+                height: "100%",
+                symbol: currentSymbol,
+                showIntervalTabs: true,
+                displayMode: "single",
+                locale: "en",
+                colorTheme: currentTheme
+            });
+
+            container.appendChild(script);
+        }
+
+        function renderEconomicCalendar() {
+            const container = document.getElementById("tradingview_insights");
+            container.innerHTML = "";
+
+            const script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "https://s3.tradingview.com/external-embedding/embed-widget-events.js";
+            script.async = true;
+            script.innerHTML = JSON.stringify({
+                colorTheme: currentTheme,
+                isTransparent: true,
+                width: "100%",
+                height: "100%",
+                locale: "en",
+                importanceFilter: "-1,0,1",
+                countryFilter: "us"
+            });
+
+            container.appendChild(script);
+        }
+
+        function renderInsights() {
+            syncInsightsTabs();
+            if (currentInsightsMode === "technical") {
+                renderTechnicalAnalysis();
+            } else {
+                renderEconomicCalendar();
+            }
+        }
+
         function loadWidget(index) {
             currentWidgetIndex = Number(index);
             indicatorSelect.value = currentWidgetIndex;
@@ -769,6 +948,7 @@
             const widget = widgets[currentWidgetIndex];
             updateHeader(widget);
             renderTradingView(widget);
+            renderInsights();
         }
 
         function applySelections() {
@@ -788,6 +968,7 @@
             currentSymbol = defaultState.symbol;
             currentInterval = defaultState.interval;
             currentTheme = defaultState.theme;
+            currentInsightsMode = defaultState.insightsMode;
 
             symbolSelect.value = currentSymbol;
             intervalSelect.value = currentInterval;
@@ -798,13 +979,12 @@
 
         function toggleFullscreen() {
             widgetCard.classList.toggle("fullscreen-mode");
-
             fullscreenBtn.textContent = widgetCard.classList.contains("fullscreen-mode")
                 ? "Exit Fullscreen"
                 : "Fullscreen";
 
             setTimeout(() => {
-                loadWidget(currentWidgetIndex);
+                renderTradingView(widgets[currentWidgetIndex]);
             }, 150);
         }
 
@@ -817,6 +997,16 @@
         intervalSelect.addEventListener("change", applySelections);
         indicatorSelect.addEventListener("change", applySelections);
         themeToggle.addEventListener("change", toggleTheme);
+
+        technicalTabBtn.addEventListener("click", () => {
+            currentInsightsMode = "technical";
+            renderInsights();
+        });
+
+        calendarTabBtn.addEventListener("click", () => {
+            currentInsightsMode = "calendar";
+            renderInsights();
+        });
 
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape" && widgetCard.classList.contains("fullscreen-mode")) {
