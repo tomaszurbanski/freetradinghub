@@ -1178,19 +1178,39 @@
             }
         }
 
-        function isSessionOpen(hour, startHour, endHour) {
-            return hour >= startHour && hour < endHour;
-        }
-
-        function getHourInTimeZone(timeZone) {
+        function getTimePartsInTimeZone(timeZone) {
             const parts = new Intl.DateTimeFormat("en-GB", {
                 timeZone,
+                weekday: "short",
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: false
             }).formatToParts(new Date());
 
-            return Number(parts.find(p => p.type === "hour").value);
+            const hour = Number(parts.find(p => p.type === "hour").value);
+            const minute = Number(parts.find(p => p.type === "minute").value);
+            const weekday = parts.find(p => p.type === "weekday").value;
+
+            return { hour, minute, weekday };
+        }
+
+        function isWeekendInMarketTime(timeZone) {
+            const weekday = new Intl.DateTimeFormat("en-GB", {
+                timeZone,
+                weekday: "short"
+            }).format(new Date());
+
+            return weekday === "Sat" || weekday === "Sun";
+        }
+
+        function isSessionOpen(timeZone, startHour, endHour) {
+            const { hour } = getTimePartsInTimeZone(timeZone);
+
+            if (isWeekendInMarketTime(timeZone)) {
+                return false;
+            }
+
+            return hour >= startHour && hour < endHour;
         }
 
         function getFormattedTime(timeZone) {
@@ -1204,8 +1224,7 @@
 
         function updateSessionCard(timeElId, statusElId, dotElId, timeZone, startHour, endHour) {
             const timeText = getFormattedTime(timeZone);
-            const hour = getHourInTimeZone(timeZone);
-            const open = isSessionOpen(hour, startHour, endHour);
+            const open = isSessionOpen(timeZone, startHour, endHour);
 
             document.getElementById(timeElId).textContent = timeText;
             document.getElementById(statusElId).textContent = open ? "Open" : "Closed";
